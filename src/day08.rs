@@ -1,3 +1,5 @@
+use std::collections::VecDeque;
+
 use itertools::Itertools;
 
 struct Node {
@@ -6,17 +8,11 @@ struct Node {
 }
 
 impl Node {
-    fn from(numbers: &Vec<usize>, index: &mut usize) -> Node {
-        let child_count = numbers[*index];
-        *index += 1;
-        let metadata_count = numbers[*index];
-        *index += 1;
-        let children = (0..child_count).map(|_| Node::from(numbers, index)).collect_vec();
-        let metadata = (0..metadata_count).map(|_| {
-            let number = numbers[*index];
-            *index += 1;
-            number
-        }).collect_vec();
+    fn from(numbers: &mut VecDeque<usize>) -> Node {
+        let child_count = numbers.pop_front().unwrap_or_default();
+        let metadata_count = numbers.pop_front().unwrap_or_default();
+        let children = (0..child_count).map(|_| Node::from(numbers)).collect_vec();
+        let metadata = (0..metadata_count).map(|_| numbers.pop_front().unwrap_or_default()).collect_vec();
         Node { metadata, children }
     }
 
@@ -37,15 +33,13 @@ impl Node {
 }
 
 pub fn part1(input: String) {
-    let numbers = input.split_whitespace().flat_map(|n| n.parse().ok()).collect_vec();
-    let mut index = 0;
-    let node = Node::from(&numbers, &mut index);
+    let mut numbers = input.split_whitespace().flat_map(|n| n.parse().ok()).collect::<VecDeque<_>>();
+    let node = Node::from(&mut numbers);
     println!("{}", node.total_metadata());
 }
 
 pub fn part2(input: String) {
-    let numbers = input.split_whitespace().flat_map(|n| n.parse().ok()).collect_vec();
-    let mut index = 0;
-    let node = Node::from(&numbers, &mut index);
+    let mut numbers = input.split_whitespace().flat_map(|n| n.parse().ok()).collect::<VecDeque<_>>();
+    let node = Node::from(&mut numbers);
     println!("{}", node.value());
 }
