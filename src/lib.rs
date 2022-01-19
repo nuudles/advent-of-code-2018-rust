@@ -1,5 +1,6 @@
 pub mod selfprint;
 pub mod point;
+pub mod parse_nums;
 
 // Days
 pub mod day01;
@@ -17,6 +18,7 @@ pub mod day12;
 pub mod day13;
 pub mod day14;
 pub mod day15;
+pub mod day16;
 
 pub fn noop(_inp: String) {}
 
@@ -39,6 +41,7 @@ pub fn get_day(day: u32) -> (DayFn, DayFn) {
         13 => (day13::part1, noop),
         14 => (day14::part1, day14::part2),
         15 => (day15::part1, day15::part2),
+        16 => (day16::part1, noop),
         _ => {
             println!("Unknown day: {}", day);
             return (noop, noop);
