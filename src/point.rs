@@ -33,6 +33,23 @@ impl<T> Point<T> where
     T: From<u8>,
     T: Sub<Output = T>,
     T: Add<Output = T> {
+
+    pub fn down(&self) -> Point<T> {
+        Point { x: self.x, y: self.y + T::from(1) }
+    }
+
+    pub fn up(&self) -> Point<T> {
+        Point { x: self.x, y: self.y - T::from(1) }
+    }
+
+    pub fn left(&self) -> Point<T> {
+        Point { x: self.x - T::from(1), y: self.y }
+    }
+
+    pub fn right(&self) -> Point<T> {
+        Point { x: self.x + T::from(1), y: self.y }
+    }
+
     pub fn neighbors(&self) -> [Point<T>; 4] {
         let one = T::from(1);
         [
