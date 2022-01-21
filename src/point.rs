@@ -1,5 +1,7 @@
 use std::{fmt::Debug, ops::{Sub, Add}};
 
+use pathfinding::prelude::absdiff;
+
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub struct Point<T> {
     pub x: T,
@@ -32,7 +34,8 @@ impl<T> Point<T> where
     T: Copy,
     T: From<u8>,
     T: Sub<Output = T>,
-    T: Add<Output = T> {
+    T: Add<Output = T>,
+    T: PartialOrd {
 
     pub fn down(&self) -> Point<T> {
         Point { x: self.x, y: self.y + T::from(1) }
@@ -72,5 +75,9 @@ impl<T> Point<T> where
             Point { x: self.x, y: self.y + one },
             Point { x: self.x + one, y: self.y + one },
         ]
+    }
+
+    pub fn manhattan_distance(&self, other: &Point<T>) -> T {
+        absdiff(self.x, other.x) + absdiff(self.y, other.y)
     }
 }
