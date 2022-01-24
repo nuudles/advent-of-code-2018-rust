@@ -25,6 +25,7 @@ pub mod day19;
 pub mod day20;
 pub mod day21;
 pub mod day22;
+pub mod day23;
 pub mod day24;
 pub mod day25;
 
@@ -56,6 +57,7 @@ pub fn get_day(day: u32) -> (DayFn, DayFn) {
         20 => (day20::part1, noop),
         21 => (day21::part1, noop),
         22 => (day22::part1, noop),
+        23 => (day23::part1, day23::part2),
         24 => (day24::part1, day24::part2),
         25 => (day25::part1, noop),
         _ => {
